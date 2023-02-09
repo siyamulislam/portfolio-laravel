@@ -3,6 +3,7 @@
 @section('title','Add Image')
 
 @push('page-style')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
 @section('content')
     <section class="content blog-page">
@@ -48,5 +49,6 @@
 @endsection
 
 @push('page-script')
+    @include('admin.includes.custom-toastr')
 
 @endpush

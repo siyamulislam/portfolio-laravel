@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
 @section('content')
-
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -62,9 +61,11 @@
                                         <form action="{{route('gallery.destroy',$image->id)}}"
                                               method="post" style="display: inline-block"
                                               onsubmit="return confirm('Are you sure to delete this ?')">
+{{--                                              onsubmit="return openModal()">--}}
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm">
+{{--                                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#smallModal">--}}
+                                            <button type="submit" class="btn btn-danger btn-sm"  >
                                                 <i class="zmdi zmdi-delete"></i></button>
                                         </form>
                                     </td>
@@ -77,7 +78,26 @@
             </div>
         </div>
     </div>
+    <button type="button" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal">MODAL - SMALL SIZE</button>
+    <!-- Small Size -->
+    <div class="modal fade" id="smallModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="title" id="smallModalLabel">Deleting Image!</h4>
+                </div>
+                <div class="modal-body">
+                   <p> Are you confirm to delete this file?</p>
+{{--                    <small class=" text-warning "> deleted image can't be recovered!</small>--}}
+                </div>
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-round waves-effect">Delete</button>
+                    <button type="button" class="btn btn-info  btn-round  waves-effect" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('page-script')
@@ -90,4 +110,26 @@
             });
         });
     </script>
+    <script>
+        async function  openModal() {
+           // if(2<1)return true;
+           // else return false;
+            // return false;
+
+
+            await $("#smallModal").on("click",".btn-danger", function(){
+                console.log('fired');
+                $('#smallModal').modal('hide');
+                return true;
+            });
+            await $("#smallModal").on("click",".btn-info", function(){
+                console.log('cancel');
+
+                return false;
+            });
+            return false;
+        }
+    </script>
 @endpush
+
+

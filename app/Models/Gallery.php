@@ -17,9 +17,9 @@ class Gallery extends Model
         'like_count'
     ];
 
-    public static function createOrUpdateBlog($request, $id = null)
+    public static function createOrUpdateGallery($request, $id = null)
     {
-        Blog::updateOrCreate(['id' => $id], [
+        Gallery::updateOrCreate(['id' => $id], [
             'title' => $request->title,
             'image' =>Helper:: uploadFile($request->file('image'),'gallery',isset($id)?Gallery::find($id)->image:null),
         ]);

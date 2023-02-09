@@ -24,6 +24,15 @@ Route::get('/',                      function () { return redirect('dashboard/in
 Route::get('dashboard',              function () { return redirect('dashboard/index'); });
 Route::get ('dashboard/index',                     [DashboardController::class, 'dashboard'])->name('dashboard');
 Route::get ('dashboard/index',                     [DashboardController::class, 'dashboard'])->name('dashboard');
+
 Route::get ('gallery/index',                      [GalleryController::class, 'index'])->name('gallery.index');
-Route::get ('gallery/create',                      [GalleryController::class, 'create'])->name('gallery.create');
+Route::get ('gallery/create',                     [GalleryController::class, 'create'])->name('gallery.create');
+Route::post ('gallery/store',                     [GalleryController::class, 'store'])->name('gallery.store');
+Route::get ('gallery/edit/{id}',                  [GalleryController::class, 'edit'])->name('gallery.edit');
+Route::post ('gallery/update/{id}',               [GalleryController::class, 'update'])->name('gallery.update');
+Route::delete ('gallery/destroy/{id}',            [GalleryController::class, 'destroy'])->name('gallery.destroy');
+
+
+Route::get('/change-image-status/{id}',[GalleryController::class,'changeImageStatus'])->name('image.status');
+
 

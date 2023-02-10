@@ -50,5 +50,4 @@
 
 @push('page-script')
     @include('admin.includes.custom-toastr')
-
 @endpush

@@ -4,7 +4,7 @@
     <script>
         toastr.error("{{Session::get('error')}}");
     </script>
-    {Session::forget('error')}}
+   {{Session::forget('error')}}
 @endif
 @if(Session::has('success'))
     <script>
@@ -27,6 +27,6 @@
         }
         toastr.success("{{Session::get('success')}}","Congratulation!")
     </script>
-    {Session::forget('success')}}
+    {{Session::forget('success')}}
 @endif
 {{--toastr end--}}

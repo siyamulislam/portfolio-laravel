@@ -31,6 +31,7 @@ Route::post ('gallery/store',                     [GalleryController::class, 'st
 Route::get ('gallery/edit/{id}',                  [GalleryController::class, 'edit'])->name('gallery.edit');
 Route::post ('gallery/update/{id}',               [GalleryController::class, 'update'])->name('gallery.update');
 Route::delete ('gallery/destroy/{id}',            [GalleryController::class, 'destroy'])->name('gallery.destroy');
+Route::get ('gallery/{id}',                       [GalleryController::class, 'show'])->name('gallery.show');
 
 
 Route::get('/change-image-status/{id}',[GalleryController::class,'changeImageStatus'])->name('image.status');

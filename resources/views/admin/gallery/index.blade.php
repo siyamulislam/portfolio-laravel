@@ -5,7 +5,9 @@
 @push('page-style')
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     {{--toastr--}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+          integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 @endpush
 @section('content')
     <div class="container-fluid">
@@ -22,8 +24,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body table-responsive">
-                        <table id="galleryTable" class="table c_table table-striped dt-responsive table-hover nowrap w-100">
+                    <div class="card-body table-responsive" id="tableDIV">
+                        <table id="galleryTable"
+                               class="table c_table table-striped dt-responsive table-hover nowrap w-100">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -47,27 +50,31 @@
 
                                     <td>{{ $image->status==1?"Show":"Hide" }}</td>
                                     <td class=" ">
-                                        <a href="{{route('image.status',['id'=>$image->id])}}"
-                                           class="btn btn-sm {{ $image->status == 1 ? 'btn-secondary' : 'btn-warning' }}"
+                                        <a href="#statusModal" data-toggle="modal" data-keyboard="true"
+                                           data-route="{{route('image.status',['id'=>$image->id])}}"
+                                             class="btn btn-sm {{ $image->status == 1 ? 'btn-secondary' : 'btn-warning' }}"
                                            title="Change Image Status ">
                                             <i class="{{ $image->status == 1 ? 'zmdi zmdi-long-arrow-up' : 'zmdi zmdi-long-arrow-down' }}"></i></a>
 
-                                        <a href="#"
+                                        <a href="#showModal" data-attr="{{route('gallery.show',['id'=>$image->id])}}" id="showBtn"
                                            class="btn btn-primary btn-sm">
                                             <i class="zmdi zmdi-eye"></i></a>
                                         <a href="{{route('gallery.edit',$image->id)}}"
                                            class="btn btn-success btn-sm">
                                             <i class="zmdi zmdi-edit"></i></a>
-                                        <form action="{{route('gallery.destroy',$image->id)}}"
-                                              method="post" style="display: inline-block"
-                                              onsubmit="return confirm('Are you sure to delete this ?')">
-{{--                                              onsubmit="return openModal()">--}}
-                                            @csrf
-                                            @method('delete')
-{{--                                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#smallModal">--}}
-                                            <button type="submit" class="btn btn-danger btn-sm"  >
-                                                <i class="zmdi zmdi-delete"></i></button>
-                                        </form>
+
+{{--                                        <form action="{{route('gallery.destroy',$image->id)}}"--}}
+{{--                                              method="post" style="display: inline-block"--}}
+{{--                                              onsubmit="return confirm('Are you sure to delete this ?')">--}}
+{{--                                            @csrf--}}
+{{--                                            @method('delete')--}}
+{{--                                             <button type="submit" class="btn btn-danger btn-sm">--}}
+{{--                                                <i class="zmdi zmdi-delete"></i></button>--}}
+{{--                                        </form>--}}
+
+                                        <a href="#deleteModal" data-route="{{route('gallery.destroy',$image->id)}}" data-toggle="modal"
+                                           class="btn btn-danger btn-sm">
+                                            <i class="zmdi zmdi-delete"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -78,22 +85,59 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal">MODAL - SMALL SIZE</button>
-    <!-- Small Size -->
-    <div class="modal fade" id="smallModal" tabindex="-1" role="dialog">
+    <!-- deleteModal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="title" id="smallModalLabel">Deleting Image!</h4>
+                    <h5 class="modal-title">Delete Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                   <p> Are you confirm to delete this file?</p>
-{{--                    <small class=" text-warning "> deleted image can't be recovered!</small>--}}
+                    <p> Are you confirm to update this status?</p>
                 </div>
-
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-round waves-effect">Delete</button>
-                    <button type="button" class="btn btn-info  btn-round  waves-effect" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary btn-round waves-effect" data-dismiss="modal">Cancel </button>
+                    <button type="button" class="btn btn-primary btn-round waves-effect" id="btnMdDelete">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- statusModal -->
+    <div class="modal fade" id="statusModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p> Are you confirm to update this status?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-round waves-effect" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-round waves-effect" id="btnMdUpdate">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{--    showModal_image--}}
+    <div class="modal fade" id="showModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Details Image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body " id="showMDBody">  </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-round waves-effect" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -103,6 +147,7 @@
 @push('page-script')
     @include('admin.includes.custom-toastr')
     <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    {{--    data-table--}}
     <script>
         $(document).ready(function () {
             $('#galleryTable').DataTable({
@@ -110,19 +155,84 @@
             });
         });
     </script>
+    {{--    delete modal--}}
     <script>
-        async function  openModal() {
-           // if(2<1)return true;
-           // else return false;
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            let href = button.data('route') // Extract info from data-* attributes
+            $("#deleteModal").on("click", "#btnMdDelete", function () {
+                $.ajax({
+                    url: href,
+                    type:'POST',
+                    data:{_method:"DELETE",},
+                    headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
+                    beforeSend: function () {
+                        console.log('starting');
+                        // $('.page-loader-wrapper').show();
+                    },
+                    success:function(){
+                        console.log('done');
+
+                    },
+                    complete: function () {
+                        $('#deleteModal').modal('hide');
+                        // $('.page-loader-wrapper').hide();
+                        location.reload(true);
+                    },
+                    error: function (jqXHR,testStatus,error) {
+                        console.log(error);
+                        alert("Page"+href+"cannot open. Error:"+error);
+                    }
+                });
+            });
+        })
+
+
+
+    </script>
+    {{--updateStatusModal--}}
+    <script>
+        $('#statusModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            let href = button.data('route') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            // var modal = $(this)
+            // modal.find('.modal-title').text('New message to ' + recipient)
+            // modal.find('.modal-body input').val(recipient)
+
+            $("#statusModal").on("click", "#btnMdUpdate", function () {
+                $.ajax({
+                    url: href,
+                    beforeSend: function () {
+                        console.log('starting');
+                    },
+                    complete: function () {
+                        console.log('done');
+                        $('#statusModal').modal('hide');
+                        location.reload(true);
+                        // $("#tableDIV").load(location.href+"# tableDIV*","");
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        })
+
+
+        async function openModal() {
+            // if(2<1)return true;
+            // else return false;
             // return false;
 
 
-            await $("#smallModal").on("click",".btn-danger", function(){
+            await $("#smallModal").on("click", ".btn-danger", function () {
                 console.log('fired');
                 $('#smallModal').modal('hide');
                 return true;
             });
-            await $("#smallModal").on("click",".btn-info", function(){
+            await $("#smallModal").on("click", ".btn-info", function () {
                 console.log('cancel');
 
                 return false;
@@ -130,6 +240,41 @@
             return false;
         }
     </script>
+    {{--    show modal--}}
+    <script>
+        $(document).on('click','#showBtn',function () {
+            event.preventDefault();
+            let href=$(this).attr('data-attr');
+            let element='';
+            $.ajax({
+                url: href,
+                dataType:'json',
+                contentType:'application/json',
+                beforeSend: function () {
+                    // $('.page-loader-wrapper').show();
+                    $('#showModal').modal('show');
+                     element= `<div class="d-flex justify-content-center"><div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span> </div> </div> `;
+                    document.getElementById("showMDBody").innerHTML=element;
+                },
+                success:function(data){
+                    // let baseURL='http://127.0.0.1:8000/';
+                    let baseURL=window.location.origin+'/';
+                    let url=baseURL+data.image;
+                    // $('#showModal').modal('show');
+                     element= `<p>Title:`+data.id+`</p> <img src='`+baseURL+data.image+`' alt=`+data.title+` style="height: 320px"> `;
+                    document.getElementById("showMDBody").innerHTML=element;
+                },
+                complete:  function () {
+                    // $('.page-loader-wrapper').hide();
+                },
+                error: function (jqXHR,testStatus,error) {
+                    console.log(error);
+                    alert("Page"+href+"cannot open. Error:"+error);
+                }
+            });
+        });
+    </script>
+
 @endpush
 
 

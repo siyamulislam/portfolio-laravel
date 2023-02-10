@@ -65,6 +65,12 @@ class GalleryController extends Controller
         $this->image->delete();
         return redirect()->back()->with('success', 'Image deleted successfully.');
     }
+    public function show($id)
+    {
+        $this->image = Gallery::find($id);
+
+        return  $this->image ;
+    }
 
     public function changeImageStatus(  $id){
         $this->image = Gallery::where('id', $id)->first();

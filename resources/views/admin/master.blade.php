@@ -19,7 +19,7 @@
 <body class="theme-blush">
 
 <!-- Page Loader -->
-@include('admin.includes.page-loader')
+{{--@include('admin.includes.page-loader')--}}
 <!-- Overlay For Sidebars -->
 <div class="overlay"></div>
 {{--right sidebar--}}

@@ -50,30 +50,29 @@
 
                                     <td>{{ $image->status==1?"Show":"Hide" }}</td>
                                     <td class=" ">
-                                        <a href="#statusModal" data-toggle="modal" data-keyboard="true"
+                                        <a href="#statusModal" data-toggle="modal"
                                            data-route="{{route('image.status',['id'=>$image->id])}}"
-                                             class="btn btn-sm {{ $image->status == 1 ? 'btn-secondary' : 'btn-warning' }}"
+                                           class="btn btn-sm {{ $image->status == 1 ? 'btn-secondary' : 'btn-warning' }}"
                                            title="Change Image Status ">
                                             <i class="{{ $image->status == 1 ? 'zmdi zmdi-long-arrow-up' : 'zmdi zmdi-long-arrow-down' }}"></i></a>
 
-                                        <a href="#showModal" data-attr="{{route('gallery.show',['id'=>$image->id])}}" id="showBtn"
+                                        <a href="#showModal" data-attr="{{route('gallery.show',['id'=>$image->id])}}"id="showBtn"
                                            class="btn btn-primary btn-sm">
                                             <i class="zmdi zmdi-eye"></i></a>
-                                        <a href="{{route('gallery.edit',$image->id)}}"
-                                           class="btn btn-success btn-sm">
+                                        <a href="{{route('gallery.edit',$image->id)}}" class="btn btn-success btn-sm">
                                             <i class="zmdi zmdi-edit"></i></a>
 
-{{--                                        <form action="{{route('gallery.destroy',$image->id)}}"--}}
-{{--                                              method="post" style="display: inline-block"--}}
-{{--                                              onsubmit="return confirm('Are you sure to delete this ?')">--}}
-{{--                                            @csrf--}}
-{{--                                            @method('delete')--}}
-{{--                                             <button type="submit" class="btn btn-danger btn-sm">--}}
-{{--                                                <i class="zmdi zmdi-delete"></i></button>--}}
-{{--                                        </form>--}}
+                                        {{--                                        <form action="{{route('gallery.destroy',$image->id)}}"--}}
+                                        {{--                                              method="post" style="display: inline-block"--}}
+                                        {{--                                              onsubmit="return confirm('Are you sure to delete this ?')">--}}
+                                        {{--                                            @csrf--}}
+                                        {{--                                            @method('delete')--}}
+                                        {{--                                             <button type="submit" class="btn btn-danger btn-sm">--}}
+                                        {{--                                                <i class="zmdi zmdi-delete"></i></button>--}}
+                                        {{--                                        </form>--}}
 
-                                        <a href="#deleteModal" data-route="{{route('gallery.destroy',$image->id)}}" data-toggle="modal"
-                                           class="btn btn-danger btn-sm">
+                                        <a href="#deleteModal" data-route="{{route('gallery.destroy',$image->id)}}"
+                                           data-toggle="modal" class="btn btn-danger btn-sm">
                                             <i class="zmdi zmdi-delete"></i></a>
                                     </td>
                                 </tr>
@@ -96,11 +95,18 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p> Are you confirm to update this status?</p>
+                    <p> Are you confirm to delete this item?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-round waves-effect" data-dismiss="modal">Cancel </button>
-                    <button type="button" class="btn btn-primary btn-round waves-effect" id="btnMdDelete">Delete</button>
+                    <button type="button" class="btn btn-secondary btn-round waves-effect" data-dismiss="modal">Cancel
+                    </button>
+                    <form id="deleteForm" action=""
+                          method="post">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-primary btn-round waves-effect" id="btnMdDelete">Delete
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -119,13 +125,14 @@
                     <p> Are you confirm to update this status?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-round waves-effect" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-round waves-effect" id="btnMdUpdate">Update</button>
+                    <button type="button" class="btn btn-secondary btn-round waves-effect" data-dismiss="modal">Cancel
+                    </button>
+                    <a type="button" href="" class="btn btn-primary btn-round waves-effect" id="btnMdUpdate">Update</a>
                 </div>
             </div>
         </div>
     </div>
-{{--    showModal_image--}}
+    {{--    showModal_image--}}
     <div class="modal fade" id="showModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
@@ -135,9 +142,10 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body " id="showMDBody">  </div>
+                <div class="modal-body " id="showMDBody" style="text-align: center"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-round waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary btn-round waves-effect" data-dismiss="modal">Close
+                    </button>
                 </div>
             </div>
         </div>
@@ -155,44 +163,21 @@
             });
         });
     </script>
-    {{--    delete modal--}}
+    {{--    delete modal ajax--}}
     <script>
         $('#deleteModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
-            let href = button.data('route') // Extract info from data-* attributes
-            $("#deleteModal").on("click", "#btnMdDelete", function () {
-                $.ajax({
-                    url: href,
-                    type:'POST',
-                    data:{_method:"DELETE",},
-                    headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
-                    beforeSend: function () {
-                        console.log('starting');
-                        // $('.page-loader-wrapper').show();
-                    },
-                    success:function(){
-                        console.log('done');
+            let actionURL = button.data('route') // Extract info from data-* attributes
+            document.getElementById("deleteForm").action = actionURL;
 
-                    },
-                    complete: function () {
-                        $('#deleteModal').modal('hide');
-                        // $('.page-loader-wrapper').hide();
-                        location.reload(true);
-                    },
-                    error: function (jqXHR,testStatus,error) {
-                        console.log(error);
-                        alert("Page"+href+"cannot open. Error:"+error);
-                    }
-                });
+            $("#deleteModal").on("click", "#btnMdDelete", function () {
+                $('#deleteModal').modal('hide');
             });
         })
-
-
-
     </script>
-    {{--updateStatusModal--}}
+    {{--updateStatusModal ajax--}}
     <script>
-        $('#statusModal').on('show.bs.modal', function (event) {
+        $('#statusModal2').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
             let href = button.data('route') // Extract info from data-* attributes
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
@@ -219,57 +204,54 @@
                 });
             });
         })
-
-
-        async function openModal() {
-            // if(2<1)return true;
-            // else return false;
-            // return false;
-
-
-            await $("#smallModal").on("click", ".btn-danger", function () {
-                console.log('fired');
-                $('#smallModal').modal('hide');
-                return true;
-            });
-            await $("#smallModal").on("click", ".btn-info", function () {
-                console.log('cancel');
-
-                return false;
-            });
-            return false;
-        }
     </script>
+
+    {{--updateStatusModal 2--}}
+    <script>
+        $('#statusModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            // let id = button.data('id') // Extract info from data-* attributes
+            // let route=`\{\{route('image.status',['id'=>`+id+`])\}\}`;
+            let updateURL = button.data('route')
+            // alert(updateURL)
+            document.getElementById("btnMdUpdate").href = updateURL;
+
+            $("#statusModal").on("click", "#btnMdUpdate", function () {
+                $('#statusModal').modal('hide');
+            });
+        })
+    </script>
+
     {{--    show modal--}}
     <script>
-        $(document).on('click','#showBtn',function () {
+        $(document).on('click', '#showBtn', function () {
             event.preventDefault();
-            let href=$(this).attr('data-attr');
-            let element='';
+            let href = $(this).attr('data-attr');
+            let element = '';
             $.ajax({
                 url: href,
-                dataType:'json',
-                contentType:'application/json',
+                dataType: 'json',
+                contentType: 'application/json',
                 beforeSend: function () {
                     // $('.page-loader-wrapper').show();
                     $('#showModal').modal('show');
-                     element= `<div class="d-flex justify-content-center"><div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span> </div> </div> `;
-                    document.getElementById("showMDBody").innerHTML=element;
+                    element = `<div class="d-flex justify-content-center"><div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span> </div> </div> `;
+                    document.getElementById("showMDBody").innerHTML = element;
                 },
-                success:function(data){
+                success: function (data) {
                     // let baseURL='http://127.0.0.1:8000/';
-                    let baseURL=window.location.origin+'/';
-                    let url=baseURL+data.image;
+                    let baseURL = window.location.origin + '/';
+                    let url = baseURL + data.image;
                     // $('#showModal').modal('show');
-                     element= `<p>Title:`+data.id+`</p> <img src='`+baseURL+data.image+`' alt=`+data.title+` style="height: 320px"> `;
-                    document.getElementById("showMDBody").innerHTML=element;
+                    element = `<p>Title:` + data.id + `</p> <img src='` + baseURL + data.image + `' alt=` + data.title + ` style="height: 320px"> `;
+                    document.getElementById("showMDBody").innerHTML = element;
                 },
-                complete:  function () {
+                complete: function () {
                     // $('.page-loader-wrapper').hide();
                 },
-                error: function (jqXHR,testStatus,error) {
+                error: function (jqXHR, testStatus, error) {
                     console.log(error);
-                    alert("Page"+href+"cannot open. Error:"+error);
+                    alert("Page" + href + "cannot open. Error:" + error);
                 }
             });
         });

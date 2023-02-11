@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\GalleryApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/gallery',function (){
-    return('100');
-});
+Route::get('/galleries',                [GalleryApiController::class, 'index'])    ->name('gallery.index');
+Route::post('/galleries',               [GalleryApiController::class, 'store'])    ->name('gallery.store');
+Route::put('galleries/update/{id}',   [GalleryApiController::class, 'update'])   ->name('gallery.update');
+Route::delete('galleries/delete/{id}',[GalleryApiController::class, 'delete'])   ->name('gallery.delete');
+Route::get('/galleries/{id}',           [GalleryApiController::class, 'indexSingle'])    ->name('gallery.index-single');
+Route::get('/galleries/random',           [GalleryApiController::class, 'pickRandom'])    ->name('gallery.random');

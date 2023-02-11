@@ -23,4 +23,4 @@ Route::post('/galleries',               [GalleryApiController::class, 'store']) 
 Route::put('galleries/update/{id}',   [GalleryApiController::class, 'update'])   ->name('gallery.update');
 Route::delete('galleries/delete/{id}',[GalleryApiController::class, 'delete'])   ->name('gallery.delete');
 Route::get('/galleries/{id}',           [GalleryApiController::class, 'indexSingle'])    ->name('gallery.index-single');
-Route::get('/galleries/random',           [GalleryApiController::class, 'pickRandom'])    ->name('gallery.random');
+Route::get('/who',           [GalleryApiController::class, 'pickRandom'])    ->name('gallery.random');

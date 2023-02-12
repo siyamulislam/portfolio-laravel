@@ -21,8 +21,8 @@
                 <ul class="ml-menu">
                     <li><a href="{{route('gallery.create')}}">Add Image</a></li>
                     <li><a href="{{route('gallery.index')}}">Manage Image</a></li>
-                    <li><a href="events.html">List View Image</a></li>
-                    <li><a href="events.html">Grid View Image</a></li>
+                    <li><a  href="{{route('gallery.grid')}}">Grid Image</a></li>
+                    <li><a href="{{route('gallery.magic')}}">Magic Image</a></li>
                 </ul>
             </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-folder"></i><span>File Manager</span></a>

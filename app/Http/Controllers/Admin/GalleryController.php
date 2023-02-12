@@ -72,10 +72,17 @@ class GalleryController extends Controller
         return  $this->image ;
     }
 
-    public function changeImageStatus(  $id){
+    public function changeImageStatus($id){
         $this->image = Gallery::where('id', $id)->first();
         $this->image->status == 0 ? $this->image->status = 1 : $this->image->status = 0;
         $this->image->save();
-        return redirect()->back()->with('success', 'image status changed successfully.');
+        return redirect()->back()->with('success','Image status changed successfully.');
     }
+    public function magic(){
+        return view('admin.gallery.magic');
+    }
+    public function grid(){
+        return view('admin.gallery.grid');
+    }
+
 }

@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 //Route::get('/', function () {
 //    return view('welcome');
-//});
-Route::redirect('/',                      function () { return redirect('dashboard/index'); });
+//});+
+Route::get('/',                      function () { return redirect('dashboard/index'); });
 
 /* Dashboard */
 Route::redirect('dashboard',                        'dashboard/index');
@@ -32,7 +32,6 @@ Route::get ('gallery/edit/{id}',                  [GalleryController::class, 'ed
 Route::post ('gallery/update/{id}',               [GalleryController::class, 'update'])->name('gallery.update');
 Route::delete ('gallery/destroy/{id}',            [GalleryController::class, 'destroy'])->name('gallery.destroy');
 Route::get ('gallery/show/{id}',                  [GalleryController::class, 'show'])->name('gallery.show');
-
 
 Route::get('/change-image-status/{id}',           [GalleryController::class,'changeImageStatus'])->name('image.status');
 Route::get ('gallery/grid',                       [GalleryController::class, 'grid'])->name('gallery.grid');

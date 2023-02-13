@@ -28,7 +28,6 @@
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="title" placeholder="Enter Image title" />
                                     @error('title') <span class="text-danger">{{$errors->first('title')}}</span> @enderror
-
                                 </div>
                                 <div class="form-group">
                                     <input type="file" class="form-control" name="image" />
@@ -36,7 +35,9 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-info waves-effect m-t-20">Save Image</button>
-{{--                                <input type="submit" class="btn btn-info waves-effect m-t-20 " value="Save Image"/>--}}
+{{--                                <input type="submit" class="btn btn-info waves-effect m-t-20 " value="Sav
+-+
+e Image"/>--}}
                             </form>
 
                         </div>

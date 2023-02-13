@@ -82,7 +82,10 @@ class GalleryController extends Controller
         return view('admin.gallery.magic');
     }
     public function grid(){
-        return view('admin.gallery.grid');
+
+        $this->images = Gallery::latest()->get();
+        return view('admin.gallery.grid', [
+            'images' =>$this->images, ]);
     }
 
 }

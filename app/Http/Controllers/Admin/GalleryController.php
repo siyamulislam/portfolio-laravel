@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class GalleryController extends Controller
 {
@@ -18,15 +19,18 @@ class GalleryController extends Controller
             'images' =>$this->images, ]);
     }
     public function store( Request $request){
-        $this->validate($request, [
-            'title' => 'required |string',
-            'image' => 'required|image',
-        ],
-            [
-                'title.required' => 'kisu lekhen vai',
-                'image.required' => 'image koi aaa?',
-                'image.image' => 'onno file ken den?'
-            ]);
+        try {
+            $this->validate($request, [
+                'title' => 'required |string',
+                'image' => 'required|image',
+            ],
+                [
+                    'title.required' => 'kisu lekhen vai',
+                    'image.required' => 'image koi aaa?',
+                    'image.image' => 'onno file ken den?'
+                ]);
+        } catch (ValidationException $e) {
+        }
         Gallery::createOrUpdateGallery($request);
         return redirect()->back()->with('success', 'Image created successfully.');
     }
@@ -82,10 +86,13 @@ class GalleryController extends Controller
         return view('admin.gallery.magic');
     }
     public function grid(){
+//$size=getimagesize("http://127.0.0.1:8000/admin/assets/upload-images/gallery/1676043576-713_wallpaperflare.com_wallpaper.jpg");
 
         $this->images = Gallery::latest()->get();
+        $activeImages = Gallery::latest()->where('status',1)->get();
+        $deactivateImages = Gallery::latest()->where('status',0)->get();
         return view('admin.gallery.grid', [
-            'images' =>$this->images, ]);
+            'images' =>$this->images,'activeImages' =>$activeImages,'deactivateImages' =>$deactivateImages, ]);
     }
 
 }

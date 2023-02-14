@@ -1,13 +1,15 @@
 <!doctype html>
-<html class="no-js " lang="en">
+<html class="no-js " lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="@yield('meta_description', config('app.name'))">
+    <meta name="author" content="@yield('meta_author', config('app.name'))">
+    @yield('meta')
     <link rel="icon" href="{{asset('/')}}admin/assets/images/favicon.ico" type="image/x-icon"> <!-- Favicon-->
-    <title>Portfolio | @yield('title')</title>
+    <title>{{ config('app.name') }} - @yield('title')</title>
     {{--   css--}}
     @stack('before-style')
     <link rel="stylesheet" href="{{asset('/')}}admin/assets/plugins/bootstrap/css/bootstrap.min.css">
@@ -15,9 +17,30 @@
 <!-- Custom Css -->
     <link rel="stylesheet" href="{{asset('/')}}admin/assets/css/style.min.css">
 </head>
+<?php
+$setting = !empty($_GET['theme']) ? $_GET['theme'] : '';
+$theme = "theme-blush";
+$menu = "";
+if ($setting == 'p') {
+    $theme = "theme-purple";
+} else if ($setting == 'b') {
+    $theme = "theme-blue";
+} else if ($setting == 'g') {
+    $theme = "theme-green";
+} else if ($setting == 'o') {
+    $theme = "theme-orange";
+} else if ($setting == 'bl') {
+    $theme = "theme-cyan";
+} else {
+    $theme = "theme-blush";
+}
 
-<body class="theme-blush">
-
+if (Request::segment(2) === 'rtl' ){
+    $theme .= " rtl";
+}
+?>
+<body class="">
+<script src="{{asset('/')}}admin/assets/js/theme-manage.js"></script>
 <!-- Page Loader -->
 {{--@include('admin.includes.page-loader')--}}
 <!-- Overlay For Sidebars -->
@@ -29,7 +52,7 @@
 {{--@yield('body')--}}
 
 <!-- Main Content -->
-<section class="content @yield('contentName')">
+<section class="content  ">
     <div class="block-header">
         <div class="row">
             <div class="col-lg-7 col-md-6 col-sm-12">

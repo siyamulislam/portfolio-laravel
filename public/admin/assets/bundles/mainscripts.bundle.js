@@ -137,7 +137,8 @@ function CustomScrollbar() {
 function CustomJs() {
     $(".light_dark input").on("change", function () {
         "dark" == $(this).val() ? $("body").addClass("theme-dark") : $("body").removeClass("theme-dark")
-        "dark" == $(this).val() ? localStorage.setItem('themeMode',"theme-dark") : localStorage.setItem('themeMode',"")
+        "dark" == $(this).val() ? localStorage.setItem('themeMode', "theme-dark") : localStorage.setItem('themeMode', "")
+        // "dark" == $(this).val() ? $("#darktheme").prop("checked", true) : $("#lighttheme").prop("checked", false)
     }), $(".rtl_support input").on("change", function () {
         $(this).val();
         $(this).is(":checked") ? $("body").addClass("rtl") : $("body").removeClass("rtl")
@@ -292,8 +293,19 @@ $.AdminAero.browser = {
         e.target != this && "close" != e.target.id && 27 != e.keyCode || $(this).removeClass("open")
     })
 }), $(function () {
-    "#dark" == location.hash && ($("body").addClass("theme-dark"), $("#darktheme").prop("checked", !0), $(".menu ul.list a").each(function () {
-        var e = $(this).attr("href") + "#dark";
-        $(this).attr("href", e)
-    }))
-});
+        "#dark" == location.hash && ($("body").addClass("theme-dark"), $("#darktheme").prop("checked", !0), $(".menu ul.list a").each(function () {
+            var e = $(this).attr("href") + "#dark";
+            $(this).attr("href", e)
+        }))
+
+        let themeMode = localStorage.getItem('themeMode');
+        themeMode === 'theme-dark' ? $('#darktheme').prop("checked", true) : $('#lighttheme').prop("checked", true)
+
+        let skinColor = localStorage.getItem('skinColor');
+        $(".right-sidebar .choose-skin li").removeClass("active")
+        let li = $(".right-sidebar .choose-skin").find(`[data-theme=` + skinColor + `]`)
+        li.addClass("active")
+
+
+    }
+);

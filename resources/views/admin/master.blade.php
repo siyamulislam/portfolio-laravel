@@ -17,28 +17,6 @@
 <!-- Custom Css -->
     <link rel="stylesheet" href="{{asset('/')}}admin/assets/css/style.min.css">
 </head>
-<?php
-$setting = !empty($_GET['theme']) ? $_GET['theme'] : '';
-$theme = "theme-blush";
-$menu = "";
-if ($setting == 'p') {
-    $theme = "theme-purple";
-} else if ($setting == 'b') {
-    $theme = "theme-blue";
-} else if ($setting == 'g') {
-    $theme = "theme-green";
-} else if ($setting == 'o') {
-    $theme = "theme-orange";
-} else if ($setting == 'bl') {
-    $theme = "theme-cyan";
-} else {
-    $theme = "theme-blush";
-}
-
-if (Request::segment(2) === 'rtl' ){
-    $theme .= " rtl";
-}
-?>
 <body class="">
 <script src="{{asset('/')}}admin/assets/js/theme-manage.js"></script>
 <!-- Page Loader -->

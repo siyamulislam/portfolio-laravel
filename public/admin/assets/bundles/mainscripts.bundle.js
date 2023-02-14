@@ -138,13 +138,14 @@ function CustomJs() {
     $(".light_dark input").on("change", function () {
         "dark" == $(this).val() ? $("body").addClass("theme-dark") : $("body").removeClass("theme-dark")
         "dark" == $(this).val() ? localStorage.setItem('themeMode', "theme-dark") : localStorage.setItem('themeMode', "")
-        // "dark" == $(this).val() ? $("#darktheme").prop("checked", true) : $("#lighttheme").prop("checked", false)
     }), $(".rtl_support input").on("change", function () {
         $(this).val();
         $(this).is(":checked") ? $("body").addClass("rtl") : $("body").removeClass("rtl")
+        $(this).is(":checked") ? localStorage.setItem('rtlMode', "rtl") : localStorage.setItem('rtlMode', "")
     }), $(".ms_bar input").on("change", function () {
         $(this).val();
         $(this).is(":checked") ? $("body").addClass("ls-toggle-menu") : $("body").removeClass("ls-toggle-menu")
+        // $(this).is(":checked") ? localStorage.setItem('msMode', "ls-toggle-menu") : localStorage.setItem('msMode', "")
     }), $(".ls-toggle-btn").on("click", function () {
         $("body").toggleClass("ls-toggle-menu")
     }), $(".mobile_menu").on("click", function () {
@@ -302,9 +303,12 @@ $.AdminAero.browser = {
         themeMode === 'theme-dark' ? $('#darktheme').prop("checked", true) : $('#lighttheme').prop("checked", true)
 
         let skinColor = localStorage.getItem('skinColor');
-        $(".right-sidebar .choose-skin li").removeClass("active")
-        let li = $(".right-sidebar .choose-skin").find(`[data-theme=` + skinColor + `]`)
-        li.addClass("active")
+        if (skinColor) {
+            $(".right-sidebar .choose-skin li").removeClass("active")
+            let li = $(".right-sidebar .choose-skin").find(`[data-theme=` + skinColor + `]`)
+            li.addClass("active")
+        }
+        localStorage.getItem('rtlMode') ? $("#checkbox1").prop('checked', true) : $("#checkbox1").prop('checked', false)
 
 
     }

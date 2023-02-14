@@ -56,7 +56,7 @@
                         </li>
                         <li>
                             <div class="checkbox ms_bar">
-                                <input id="checkbox2" type="checkbox" value="mini_active">
+                                <input id="checkbox2" type="checkbox" value="mini_active" >
                                 <label for="checkbox2">Mini Sidebar</label>
                             </div>
                         </li>

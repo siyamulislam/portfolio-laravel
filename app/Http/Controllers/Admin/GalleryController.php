@@ -5,20 +5,44 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\File;
 
 class GalleryController extends Controller
 {
-    public $image,$images;
-    public function create(){
+    public $image, $images;
+
+    public static function getImageSize($filePath)
+    {
+        $fileSize = File::size(public_path($filePath));
+        $units=array('Bytes','KB','MB','GB','TB','PB','EB');
+        return @round($fileSize/pow(1024,($i=floor(log($fileSize,1024)))),2). ' '. $units[$i];
+    }
+    public  function fileSize()
+    {
+//        $fileSize = 10;
+// $units=array('Byte','KB','MB','GB','TB','PB','EB','ZB','YB','Bronto Byte','Geop Byte');
+// return @round($fileSize/pow(1024,($i=floor(log($fileSize,1024)))),2). ' '. $units[$i];
+
+       $fileSize = File::sharedGet(public_path('admin/assets/upload-images/gallery/1676043576-713_wallpaperflare.com_wallpaper.jpg'));
+        return $fileSize;
+    }
+
+    public function create()
+    {
         return view('admin.gallery.create');
     }
-    public function index(){
+
+    public function index()
+    {
         $this->images = Gallery::latest()->get();
         return view('admin.gallery.index', [
-            'images' =>$this->images, ]);
+            'images' => $this->images,]);
     }
-    public function store( Request $request){
+
+    public function store(Request $request)
+    {
         try {
             $this->validate($request, [
                 'title' => 'required |string',
@@ -58,6 +82,7 @@ class GalleryController extends Controller
         Gallery::createOrUpdateGallery($request, $id);
         return redirect()->route('gallery.index')->with('success', 'Image updated successfully.');
     }
+
     public function destroy($id)
     {
         $this->image = Gallery::find($id);
@@ -69,30 +94,34 @@ class GalleryController extends Controller
         $this->image->delete();
         return redirect()->back()->with('success', 'Image deleted successfully.');
     }
+
     public function show($id)
     {
         $this->image = Gallery::find($id);
 
-        return  $this->image ;
+        return $this->image;
     }
 
-    public function changeImageStatus($id){
+    public function changeImageStatus($id)
+    {
         $this->image = Gallery::where('id', $id)->first();
         $this->image->status == 0 ? $this->image->status = 1 : $this->image->status = 0;
         $this->image->save();
-        return redirect()->back()->with('success','Image status changed successfully.');
+        return redirect()->back()->with('success', 'Image status changed successfully.');
     }
-    public function magic(){
+
+    public function magic()
+    {
         return view('admin.gallery.magic');
     }
-    public function grid(){
-//$size=getimagesize("http://127.0.0.1:8000/admin/assets/upload-images/gallery/1676043576-713_wallpaperflare.com_wallpaper.jpg");
 
+    public function grid()
+    {
         $this->images = Gallery::latest()->get();
-        $activeImages = Gallery::latest()->where('status',1)->get();
-        $deactivateImages = Gallery::latest()->where('status',0)->get();
+        $activeImages = Gallery::latest()->where('status', 1)->get();
+        $deactivateImages = Gallery::latest()->where('status', 0)->get();
         return view('admin.gallery.grid', [
-            'images' =>$this->images,'activeImages' =>$activeImages,'deactivateImages' =>$deactivateImages, ]);
+            'images' => $this->images, 'activeImages' => $activeImages, 'deactivateImages' => $deactivateImages,]);
     }
 
 }

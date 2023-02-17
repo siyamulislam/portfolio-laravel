@@ -30,8 +30,7 @@
                                             </div>
                                             <div class="file-name">
                                                 <p class="m-b-5 text-muted">{{$image->title}}</p>
-                                                <small> Size: 2MB <span class="date">Dec 11, 2019</span></small>
-{{--                                                <small>{{\Illuminate\Support\Facades\Storage::size(asset($image->image))}} Size: 2MB <span class="date">Dec 11, 2019</span></small>--}}
+                                                <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}<span class="date">{{$image->created_at->format('M d, Y')}}</span></small>
                                             </div>
                                         </a>
                                     </div>
@@ -55,8 +54,7 @@
                                             </div>
                                             <div class="file-name">
                                                 <p class="m-b-5 text-muted">{{$image->title}}</p>
-                                                <small> Size: 2MB <span class="date">Dec 11, 2019</span></small>
-                                                {{--                                                <small>{{\Illuminate\Support\Facades\Storage::size(asset($image->image))}} Size: 2MB <span class="date">Dec 11, 2019</span></small>--}}
+                                                <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}<span class="date">{{$image->created_at->format('M d, Y')}}</span></small>
                                             </div>
                                         </a>
                                     </div>
@@ -80,8 +78,7 @@
                                             </div>
                                             <div class="file-name">
                                                 <p class="m-b-5 text-muted">{{$image->title}}</p>
-                                                <small> Size: 2MB <span class="date">Dec 11, 2019</span></small>
-                                                {{--                                                <small>{{\Illuminate\Support\Facades\Storage::size(asset($image->image))}} Size: 2MB <span class="date">Dec 11, 2019</span></small>--}}
+                                                <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}<span class="date">{{$image->created_at->format('M d, Y')}}</span></small>
                                             </div>
                                         </a>
                                     </div>

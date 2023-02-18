@@ -36,7 +36,9 @@ Route::get ('gallery/show/{id}',                  [GalleryController::class, 'sh
 Route::get('/change-image-status/{id}',           [GalleryController::class,'changeImageStatus'])->name('image.status');
 Route::get ('gallery/grid',                       [GalleryController::class, 'grid'])->name('gallery.grid');
 Route::get ('gallery/magic',                      [GalleryController::class, 'magic'])->name('gallery.magic');
-Route::get ('gallery/file',                      [GalleryController::class, 'fileSize'])->name('gallery.fileSize');
+Route::get ('gallery/download',                   [GalleryController::class, 'fileDownload'])->name('gallery.download');
+
+Route::get ('gallery/file',                       [GalleryController::class, 'fileSize'])->name('gallery.fileSize');
 
 
 

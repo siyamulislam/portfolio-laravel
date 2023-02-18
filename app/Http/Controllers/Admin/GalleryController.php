@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\File;
 
@@ -19,14 +19,49 @@ class GalleryController extends Controller
         $units=array('Bytes','KB','MB','GB','TB','PB','EB');
         return @round($fileSize/pow(1024,($i=floor(log($fileSize,1024)))),2). ' '. $units[$i];
     }
+    public  function fileDownload( Request $request)
+    {
+        $filePath = public_path($request->image);
+        $fileName = File::basename($filePath);
+        $fileName = substr($fileName,15);
+        $headers = [
+            'Content-Type'=>'*',
+            'Access-Control-Allow-Origin'      => '*',
+            'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS',
+            'Access-Control-Allow-Credentials' => 'true',
+            'Access-Control-Max-Age'           => '86400',
+            'Access-Control-Allow-Headers'     => 'Content-Type, Authorization, X-Requested-With'
+        ];
+        return Response::download($filePath,$fileName,$headers);
+//        return $fileName;
+
+    }
     public  function fileSize()
     {
 //        $fileSize = 10;
 // $units=array('Byte','KB','MB','GB','TB','PB','EB','ZB','YB','Bronto Byte','Geop Byte');
 // return @round($fileSize/pow(1024,($i=floor(log($fileSize,1024)))),2). ' '. $units[$i];
 
-       $fileSize = File::sharedGet(public_path('admin/assets/upload-images/gallery/1676043576-713_wallpaperflare.com_wallpaper.jpg'));
-        return $fileSize;
+//        $file = File::get(public_path('/admin/assets/upload-images/gallery/1676043576-713_wallpaperflare.com_wallpaper.jpg'));
+        $filePath = public_path('/admin/assets/upload-images/gallery/1676043576-713_wallpaperflare.com_wallpaper.jpg');
+        $fileBaseName = File::basename($filePath);
+//        $fileBaseName= substr($fileBaseName,15);
+        $fileBaseName= strstr($fileBaseName,'_',false);
+
+
+//        if (File::exists(public_path('f12.zip')) ) return 'ok';
+
+        $headers = [
+            'Content-Type'=>'*',
+            'Access-Control-Allow-Origin'      => '*',
+            'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS',
+            'Access-Control-Allow-Credentials' => 'true',
+            'Access-Control-Max-Age'           => '86400',
+            'Access-Control-Allow-Headers'     => 'Content-Type, Authorization, X-Requested-With'
+        ];
+//        return Response::download($file,'1676043576-713_wallpaperflare.com_wallpaper.jpg',$headers);
+//        return Response::download($filePath,$fileBaseName,$headers);
+        return $fileBaseName;
     }
 
     public function create()

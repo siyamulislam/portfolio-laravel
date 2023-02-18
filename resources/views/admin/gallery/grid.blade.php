@@ -1,6 +1,6 @@
 @extends('admin.master')
 @section('parentPageTitle', 'Gallery')
-@section('title',' Image')
+@section('title','Image')
 
 @push('page-style')
 @endpush
@@ -19,84 +19,79 @@
                             @foreach($images as $image)
                                 <div class="col-lg-3 col-md-4 col-sm-12">
                                     <div class="card">
-                                        <a href="javascript:void(0);" class="file">
+                                        <a href="javascript:void(0);"class="file">
                                             <div class="hover">
-                                                <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-danger">
-                                                    <i class="zmdi zmdi-delete"></i>
-                                                </button>
-                                            </div>
-                                            <div class="image">
-                                                <img src="{{asset($image->image)}}" alt="img" class="img-fluid" style="height: 150px;display: block;margin: 0 auto">
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">{{$image->title}}</p>
-                                                <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}<span class="date">{{$image->created_at->format('M d, Y')}}</span></small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="b2019">
-                        <div class="row clearfix">
-                            @foreach($activeImages as $image)
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <div class="card">
-                                        <a href="javascript:void(0);" class="file">
-                                            <div class="hover">
-                                                <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-danger">
-                                                    <i class="zmdi zmdi-delete"></i>
-                                                </button>
-                                            </div>
-                                            <div class="image">
-                                                <img src="{{asset($image->image)}}" alt="img" class="img-fluid" style="height: 150px;display: block;margin: 0 auto">
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">{{$image->title}}</p>
-                                                <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}<span class="date">{{$image->created_at->format('M d, Y')}}</span></small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="b2018">
-                        <div class="row clearfix">
-                            @foreach($deactivateImages as $image)
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <div class="card">
-                                        <a href="javascript:void(0);" class="file">
-                                            <div class="hover">
-                                                <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-danger">
-                                                    <i class="zmdi zmdi-delete"></i>
-                                                </button>
-                                            </div>
-                                            <div class="image">
-                                                <img src="{{asset($image->image)}}" alt="img" class="img-fluid" style="height: 150px;display: block;margin: 0 auto">
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">{{$image->title}}</p>
-                                                <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}<span class="date">{{$image->created_at->format('M d, Y')}}</span></small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                                <form action="{{route('gallery.download')}}"method="get" style="display: inline-block">
+                                                    <input type="hidden" name="image" value="{{$image->image}}">
+    <button type="submit" class="btn btn-icon btn-icon-mini btn-round btn-success"><i class="zmdi zmdi-download"></i></button>
+                                                </form>
+            <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-danger"><i class="zmdi zmdi-delete"></i></button>
         </div>
-    </div>
-    @endsection
+        <div class="image">
+            <img src="{{asset($image->image)}}" alt="{{$image->title}}" class="img-fluid" style="height: 150px;display: block;margin: 0 auto">
+        </div>
+        <div class="file-name">
+            <p class="m-b-5 text-muted">{{$image->title}}</p>
+            <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}<span class="date">{{$image->created_at->format('M d, Y')}}</span></small>
+        </div>
+    </a>
+</div>
+</div>
+@endforeach
+</div>
+</div>
+<div class="tab-pane" id="b2019">
+<div class="row clearfix">
+@foreach($activeImages as $image)
+<div class="col-lg-3 col-md-4 col-sm-12">
+<div class="card">
+    <a href="javascript:void(0);" class="file">
+        <div class="hover">
+            <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-success"><i class="zmdi zmdi-download"></i></button>
+            <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-danger"><i class="zmdi zmdi-delete"></i></button>
+        </div>
+        <div class="image">
+            <img src="{{asset($image->image)}}" alt="img" class="img-fluid" style="height: 150px;display: block;margin: 0 auto">
+        </div>
+        <div class="file-name">
+            <p class="m-b-5 text-muted">{{$image->title}}</p>
+            <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}<span class="date">{{$image->created_at->format('M d, Y')}}</span></small>
+        </div>
+    </a>
+</div>
+</div>
+@endforeach
+</div>
+</div>
+<div class="tab-pane" id="b2018">
+<div class="row clearfix">
+@foreach($deactivateImages as $image)
+<div class="col-lg-3 col-md-4 col-sm-12">
+<div class="card">
+    <a href="javascript:void(0);" class="file">
+        <div class="hover">
+            <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-success"><i class="zmdi zmdi-download"></i></button>
+            <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-danger"> <i class="zmdi zmdi-delete"></i></button>
+        </div>
+        <div class="image">
+            <img src="{{asset($image->image)}}" alt="img" class="img-fluid" style="height: 150px;display: block;margin: 0 auto">
+        </div>
+        <div class="file-name">
+            <p class="m-b-5 text-muted">{{$image->title}}</p>
+            <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}<span class="date">{{$image->created_at->format('M d, Y')}}</span></small>
+        </div>
+    </a>
+</div>
+</div>
+@endforeach
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+@endsection
+@push('page-script')
 
-        @push('page-script')
 
-
-
-
-    @endpush
-
-
+@endpush

@@ -22,8 +22,14 @@ class GalleryController extends Controller
     public  function fileDownload( Request $request)
     {
         $filePath = public_path($request->image);
-        $fileName = File::basename($filePath);
-        $fileName = substr($fileName,15);
+
+//        $fileName = File::basename($filePath);
+//        $fileName = substr($fileName,15);
+
+        $fileName = $request->title;
+        $fileExt = File::extension($filePath);
+        $fileName=$fileName.'.'.$fileExt;
+
         $headers = [
             'Content-Type'=>'*',
             'Access-Control-Allow-Origin'      => '*',

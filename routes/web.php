@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\GalleryController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,10 +21,11 @@ use Illuminate\Support\Facades\Route;
 //});+
 Route::get('/',                      function () { return redirect('dashboard/index'); });
 
+
 /* Dashboard */
-Route::redirect('dashboard',                        'dashboard/index');
-Route::get ('dashboard/index',                     [DashboardController::class, 'dashboard'])->name('dashboard');
-Route::get ('dashboard/index',                     [DashboardController::class, 'dashboard'])->name('dashboard');
+Route::redirect('dashboard',                      'dashboard/index');
+Route::get ('dashboard/index',                    [DashboardController::class, 'dashboard'])->name('dashboard');
+Route::get ('dashboard/index',                    [DashboardController::class, 'dashboard'])->name('dashboard');
 
 Route::get ('gallery/index',                      [GalleryController::class, 'index'])->name('gallery.index');
 Route::get ('gallery/create',                     [GalleryController::class, 'create'])->name('gallery.create');
@@ -40,5 +42,10 @@ Route::get ('gallery/download',                   [GalleryController::class, 'fi
 
 Route::get ('gallery/file',                       [GalleryController::class, 'fileSize'])->name('gallery.fileSize');
 
+//education
+Route::get ('education/index',                      [EducationController::class, 'index'])->name('education.index');
+Route::get ('education/create',                     [EducationController::class, 'create'])->name('education.create');
+Route::post ('education/store',                     [EducationController::class, 'store'])->name('education.store');
+Route::delete ('education/destroy/{id}',            [EducationController::class, 'destroy'])->name('education.destroy');
 
 

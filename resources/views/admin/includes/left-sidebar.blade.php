@@ -25,6 +25,12 @@
                     <li><a href="{{route('gallery.magic')}}">Magic Image</a></li>
                 </ul>
             </li>
+            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-graduation-cap"></i><span>Education</span></a>
+                <ul class="ml-menu">
+                    <li><a href="{{route('education.create')}}">Add Education</a></li>
+                    <li><a href="{{route('education.index')}}">Manage Education</a></li>
+                </ul>
+            </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-folder"></i><span>File Manager</span></a>
                 <ul class="ml-menu">
                     <li><a href="file-dashboard.html">All File</a></li>

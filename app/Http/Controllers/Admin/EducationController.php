@@ -58,9 +58,9 @@ class EducationController extends Controller
     public function destroy($id)
     {
         $education = Education::find($id);
-        if (isset($$education->image)) {
-            if (file_exists($education->image)) {
-                unlink($education->image);
+        if (isset($education->logo_path)) {
+            if (file_exists($education->logo_path)) {
+                unlink($education->logo_path);
             }
         }
         $education->delete();

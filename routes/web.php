@@ -46,6 +46,10 @@ Route::get ('gallery/file',                       [GalleryController::class, 'fi
 Route::get ('education/index',                      [EducationController::class, 'index'])->name('education.index');
 Route::get ('education/create',                     [EducationController::class, 'create'])->name('education.create');
 Route::post ('education/store',                     [EducationController::class, 'store'])->name('education.store');
+Route::get ('education/edit/{id}',                  [EducationController::class, 'edit'])->name('education.edit');
+Route::post ('education/update/{id}',               [EducationController::class, 'update'])->name('education.update');
 Route::delete ('education/destroy/{id}',            [EducationController::class, 'destroy'])->name('education.destroy');
 
+Route::get('/change-degree-status/{id}',            [EducationController::class,'changeDegreeStatus'])->name('degree.status');
+Route::get ('degree/show/{id}',                     [EducationController::class, 'show'])->name('degree.show');
 

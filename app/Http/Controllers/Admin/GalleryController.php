@@ -139,7 +139,6 @@ class GalleryController extends Controller
     public function show($id)
     {
         $this->image = Gallery::find($id);
-
         return $this->image;
     }
 

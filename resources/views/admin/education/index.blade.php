@@ -30,36 +30,39 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Image</th>
-                                <th>Title</th>
+                                <th>Logo</th>
+                                <th>Institute</th>
                                 <th>Degree</th>
+                                <th>Duration</th>
+                                <th>Website</th>
                                 <th>Status</th>
                                 <th class="">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($educations as $image)
+                            @foreach($educations as $degree)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td><img src="{{asset($image->logo_path)}}" alt="" style="height: 70px;width: 70px">
-                                    </td>
-                                    <td>{{\Illuminate\Support\Str::limit($image->title,12)}}</td>
-                                    <td>{{ $image->subtitle }}</td>
+                                    <td><img src="{{asset($degree->logo_path)}}" alt="" style="width: 100%">  </td>
+                                    <td>{{\Illuminate\Support\Str::limit($degree->title,12)}}</td>
+                                    <td>{{ $degree->subtitle }}</td>
 
-                                    <td>{{ $image->status==1?"Show":"Hide" }}</td>
+                                    <td>{{ date('Y', strtotime($degree->starting_date)) .' - '. date('Y', strtotime($degree->ending_date))}}</td>
+                                    <td>{{ $degree->website_link}}</td>
+                                    <td>{{ $degree->status==1?"Show":"Hide" }}</td>
                                     <td class=" ">
                                         <a href="#statusModal" data-toggle="modal"
-                                           data-route="{{route('image.status',['id'=>$image->id])}}"
-                                           class="btn btn-sm {{ $image->status == 1 ? 'btn-secondary' : 'btn-warning' }}"
+                                           data-route="{{route('degree.status',['id'=>$degree->id])}}"
+                                           class="btn btn-sm {{ $degree->status == 1 ? 'btn-secondary' : 'btn-warning' }}"
                                            title="Change Image Status ">
-                                            <i class="{{ $image->status == 1 ? 'zmdi zmdi-long-arrow-up' : 'zmdi zmdi-long-arrow-down' }}"></i></a>
+                                            <i class="{{ $degree->status == 1 ? 'zmdi zmdi-long-arrow-up' : 'zmdi zmdi-long-arrow-down' }}"></i></a>
 
-                                        <a href="#showModal" data-attr="#" id="showBtn"
+                                        <a href="#showModal" data-attr="{{route('degree.show',['id'=>$degree->id])}}" id="showBtn"
                                            class="btn btn-primary btn-sm">
                                             <i class="zmdi zmdi-eye"></i></a>
-                                        <a href="#" class="btn btn-success btn-sm">
+                                        <a href="{{route('education.edit',$degree->id)}}" class="btn btn-success btn-sm">
                                             <i class="zmdi zmdi-edit"></i></a>
-                                        <a href="#deleteModal" data-route="{{route('education.destroy',$image->id)}}"
+                                        <a href="#deleteModal" data-route="{{route('education.destroy',$degree->id)}}"
                                            data-toggle="modal" class="btn btn-danger btn-sm">
                                             <i class="zmdi zmdi-delete"></i></a>
                                     </td>
@@ -73,59 +76,16 @@
         </div>
     </div>
     <!-- deleteModal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Delete Item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p> Are you confirm to delete this item?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-round waves-effect" data-dismiss="modal">Cancel
-                    </button>
-                    <form id="deleteForm" action=""
-                          method="post">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-primary btn-round waves-effect" id="btnMdDelete">Delete
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+   @include('admin/includes/modals/delete')
     <!-- statusModal -->
-    <div class="modal fade" id="statusModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Update Status</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p> Are you confirm to update this status?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-round waves-effect" data-dismiss="modal">Cancel
-                    </button>
-                    <a type="button" href="" class="btn btn-primary btn-round waves-effect" id="btnMdUpdate">Update</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('admin/includes/modals/status')
+
     {{--    showModal_image--}}
     <div class="modal fade" id="showModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Details Image</h5>
+                    <h5 class="modal-title">Details Degree</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -151,45 +111,19 @@
             });
         });
     </script>
-    {{--    delete modal ajax--}}
+    {{--    delete modal --}}
     <script>
         $('#deleteModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
             let actionURL = button.data('route') // Extract info from data-* attributes
             document.getElementById("deleteForm").action = actionURL;
-
             $("#deleteModal").on("click", "#btnMdDelete", function () {
                 $('#deleteModal').modal('hide');
             });
         })
     </script>
-    {{--updateStatusModal ajax--}}
-    <script>
-        $('#statusModal2').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Button that triggered the modal
-            let href = button.data('route') // Extract info from data-* attributes
 
-            $("#statusModal").on("click", "#btnMdUpdate", function () {
-                $.ajax({
-                    url: href,
-                    beforeSend: function () {
-                        console.log('starting');
-                    },
-                    complete: function () {
-                        console.log('done');
-                        $('#statusModal').modal('hide');
-                        location.reload(true);
-                        // $("#tableDIV").load(location.href+"# tableDIV*","");
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-            });
-        })
-    </script>
-
-    {{--updateStatusModal 2--}}
+    {{--updateStatusModal--}}
     <script>
         $('#statusModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
@@ -222,15 +156,23 @@
                     document.getElementById("showMDBody").innerHTML = element;
                 },
                 success: function (data) {
-                    // let baseURL='http://127.0.0.1:8000/';
                     let baseURL = window.location.origin + '/';
                     let url = baseURL + data.image;
                     // $('#showModal').modal('show');
-                    element = `<p>Title:` + data.id + `</p> <img src='` + baseURL + data.image + `' alt=` + data.title + ` style="height: 320px"> `;
+                    element= `
+                     <img src='${baseURL+data.logo_path}' alt='${data.title}'   style='height: 120px'>
+                    <p>Institute: ${data.title}</p>
+                    <p>Degree: ${data.subtitle}</p>
+                    <p>Duration: ${data.starting_date} - ${data.ending_date}</p>
+                    <p>Descriptions:<br> ${data.descriptions}</p>
+
+                    <p>Website: <a href="//${data.website_link}" target="_blank">${data.website_link}</a></p>
+
+                    `;
+
                     document.getElementById("showMDBody").innerHTML = element;
                 },
                 complete: function () {
-                    // $('.page-loader-wrapper').hide();
                 },
                 error: function (jqXHR, testStatus, error) {
                     console.log(error);

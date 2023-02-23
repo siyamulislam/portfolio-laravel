@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CertificationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\GalleryController;
@@ -43,13 +44,19 @@ Route::get ('gallery/download',                   [GalleryController::class, 'fi
 Route::get ('gallery/file',                       [GalleryController::class, 'fileSize'])->name('gallery.fileSize');
 
 //education
-Route::get ('education/index',                      [EducationController::class, 'index'])->name('education.index');
-Route::get ('education/create',                     [EducationController::class, 'create'])->name('education.create');
-Route::post ('education/store',                     [EducationController::class, 'store'])->name('education.store');
-Route::get ('education/edit/{id}',                  [EducationController::class, 'edit'])->name('education.edit');
-Route::post ('education/update/{id}',               [EducationController::class, 'update'])->name('education.update');
-Route::delete ('education/destroy/{id}',            [EducationController::class, 'destroy'])->name('education.destroy');
+Route::get ('education/index',                   [EducationController::class, 'index'])->name('education.index');
+Route::get ('education/create',                  [EducationController::class, 'create'])->name('education.create');
+Route::post ('education/store',                  [EducationController::class, 'store'])->name('education.store');
+Route::get ('education/edit/{id}',               [EducationController::class, 'edit'])->name('education.edit');
+Route::post ('education/update/{id}',            [EducationController::class, 'update'])->name('education.update');
+Route::delete ('education/destroy/{id}',         [EducationController::class, 'destroy'])->name('education.destroy');
 
-Route::get('/change-degree-status/{id}',            [EducationController::class,'changeDegreeStatus'])->name('degree.status');
-Route::get ('degree/show/{id}',                     [EducationController::class, 'show'])->name('degree.show');
+Route::get('/change-degree-status/{id}',         [EducationController::class,'changeDegreeStatus'])->name('degree.status');
+Route::get ('degree/show/{id}',                  [EducationController::class, 'show'])->name('degree.show');
+
+Route::resource('certifications',      CertificationController::class);
+Route::get('/change-certificate-status/{id}',    [CertificationController::class,'changeCertificateStatus'])->name('certificate.status');
+Route::get ('certificate/show/{id}',             [CertificationController::class, 'show'])->name('certificate.show');
+
+
 

@@ -29,6 +29,14 @@
                 <ul class="ml-menu">
                     <li><a href="{{route('education.create')}}">Add Education</a></li>
                     <li><a href="{{route('education.index')}}">Manage Education</a></li>
+                    <li><a href="{{route('certifications.create')}}">Add certification</a></li>
+                    <li><a href="{{route('certifications.index')}}">Manage certification</a></li>
+                </ul>
+            </li>
+            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-assignment"></i><span>Project</span></a>
+                <ul class="ml-menu">
+                    <li><a href="{{route('education.create')}}">Add Project</a></li>
+                    <li><a href="{{route('education.index')}}">Manage Project</a></li>
                 </ul>
             </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-folder"></i><span>File Manager</span></a>

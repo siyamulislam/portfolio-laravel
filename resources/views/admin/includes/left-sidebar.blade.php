@@ -27,10 +27,10 @@
             </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-graduation-cap"></i><span>Education</span></a>
                 <ul class="ml-menu">
-                    <li><a href="{{route('education.create')}}">Add Education</a></li>
-                    <li><a href="{{route('education.index')}}">Manage Education</a></li>
-                    <li><a href="{{route('certifications.create')}}">Add certification</a></li>
-                    <li><a href="{{route('certifications.index')}}">Manage certification</a></li>
+                    <li><a href="{{route('education.create')}}">Add Degree</a></li>
+                    <li><a href="{{route('education.index')}}">Manage Degree</a></li>
+                    <li><a href="{{route('certifications.create')}}">Add Certificate</a></li>
+                    <li><a href="{{route('certifications.index')}}">Manage Certificate</a></li>
                 </ul>
             </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-assignment"></i><span>Project</span></a>

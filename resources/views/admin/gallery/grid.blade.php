@@ -25,13 +25,27 @@
                                                       style="display: inline-block">
                                                     <input type="hidden" name="image" value="{{$image->image}}">
                                                     <input type="hidden" name="title" value="{{$image->title}}">
-                                                    <button type="submit"
-                                                            class="btn btn-icon btn-icon-mini btn-round btn-success"><i
+                                                    <button type="submit"class="btn btn-icon btn-icon-mini btn-round btn-success"><i
                                                             class="zmdi zmdi-download"></i></button>
                                                 </form>
-                                                <button type="button"
-                                                        class="btn btn-icon btn-icon-mini btn-round btn-danger"><i
+
+                                                <button data-terget="#deleteModal" data-route="{{route('gallery.destroy',$image->id)}}"
+                                                        data-toggle="modal"
+                                                        class="btn btn-icon btn-icon-mini btn-round btn-danger ddd"><i
                                                         class="zmdi zmdi-delete"></i></button>
+
+{{--                                                delete by form--}}
+{{--                                                <form action="{{route('gallery.destroy',$image->id)}}" method="post"--}}
+{{--                                                      style="display: inline-block"> @csrf @method('delete')--}}
+{{--                                                    <button type="submit" data-terget="#deleteModal" data-toggle="modal"--}}
+{{--                                                            class="btn btn-icon btn-icon-mini btn-round btn-danger"><i--}}
+{{--                                                            class="zmdi zmdi-delete"></i></button>--}}
+{{--                                                </form>--}}
+{{--                                                delete by a--}}
+{{--                                                    <a href="#deleteModal" data-route="{{route('gallery.destroy',$image->id)}}"--}}
+{{--                                                       data-toggle="modal" class="btn btn-danger btn-sm">--}}
+{{--                                                        <i class="zmdi zmdi-delete"></i></a>--}}
+
                                             </div>
                                             <div class="image">
                                                 <img src="{{asset($image->image)}}" alt="{{$image->title}}"
@@ -57,11 +71,17 @@
                                     <div class="card">
                                         <a href="javascript:void(0);" class="file">
                                             <div class="hover">
-                                                <button type="button"
-                                                        class="btn btn-icon btn-icon-mini btn-round btn-success"><i
-                                                        class="zmdi zmdi-download"></i></button>
-                                                <button type="button"
-                                                        class="btn btn-icon btn-icon-mini btn-round btn-danger"><i
+                                                <form action="{{route('gallery.download')}}" method="get"
+                                                      style="display: inline-block">
+                                                    <input type="hidden" name="image" value="{{$image->image}}">
+                                                    <input type="hidden" name="title" value="{{$image->title}}">
+                                                    <button type="submit"class="btn btn-icon btn-icon-mini btn-round btn-success"><i
+                                                            class="zmdi zmdi-download"></i></button>
+                                                </form>
+
+                                                <button data-terget="#deleteModal" data-route="{{route('gallery.destroy',$image->id)}}"
+                                                        data-toggle="modal"
+                                                        class="btn btn-icon btn-icon-mini btn-round btn-danger ddd"><i
                                                         class="zmdi zmdi-delete"></i></button>
                                             </div>
                                             <div class="image">
@@ -87,11 +107,17 @@
                                     <div class="card">
                                         <a href="javascript:void(0);" class="file">
                                             <div class="hover">
-                                                <button type="button"
-                                                        class="btn btn-icon btn-icon-mini btn-round btn-success"><i
-                                                        class="zmdi zmdi-download"></i></button>
-                                                <button type="button"
-                                                        class="btn btn-icon btn-icon-mini btn-round btn-danger"><i
+                                                <form action="{{route('gallery.download')}}" method="get"
+                                                      style="display: inline-block">
+                                                    <input type="hidden" name="image" value="{{$image->image}}">
+                                                    <input type="hidden" name="title" value="{{$image->title}}">
+                                                    <button type="submit"class="btn btn-icon btn-icon-mini btn-round btn-success"><i
+                                                            class="zmdi zmdi-download"></i></button>
+                                                </form>
+
+                                                <button data-terget="#deleteModal" data-route="{{route('gallery.destroy',$image->id)}}"
+                                                        data-toggle="modal"
+                                                        class="btn btn-icon btn-icon-mini btn-round btn-danger ddd"><i
                                                         class="zmdi zmdi-delete"></i></button>
                                             </div>
                                             <div class="image">
@@ -114,8 +140,28 @@
             </div>
         </div>
     </div>
+    <!-- deleteModal -->
+    @include('admin/includes/modals/delete')
 @endsection
 @push('page-script')
+    {{--    delete modal --}}
+    <script>
+        $('.ddd').click(function () {
+            $('#deleteModal').modal('show');
+            document.getElementById("deleteForm").action =  $(this).data('route');
+        });
+        $("#deleteModal").on("click", "#btnMdDelete", function () {
+            $('#deleteModal').modal('hide');
+        });
 
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            let actionURL = button.data('route') // Extract info from data-* attributes
+            document.getElementById("deleteForm").action = actionURL;
+            $("#deleteModal").on("click", "#btnMdDelete", function () {
+                $('#deleteModal').modal('hide');
+            });
+        })
+    </script>
 
 @endpush

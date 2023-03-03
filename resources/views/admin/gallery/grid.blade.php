@@ -1,6 +1,6 @@
 @extends('admin.master')
 @section('parentPageTitle', 'Gallery')
-@section('title',' Image')
+@section('title','Image')
 
 @push('page-style')
 @endpush
@@ -21,17 +21,42 @@
                                     <div class="card">
                                         <a href="javascript:void(0);" class="file">
                                             <div class="hover">
-                                                <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-danger">
-                                                    <i class="zmdi zmdi-delete"></i>
-                                                </button>
+                                                <form action="{{route('gallery.download')}}" method="get"
+                                                      style="display: inline-block">
+                                                    <input type="hidden" name="image" value="{{$image->image}}">
+                                                    <input type="hidden" name="title" value="{{$image->title}}">
+                                                    <button type="submit"class="btn btn-icon btn-icon-mini btn-round btn-success"><i
+                                                            class="zmdi zmdi-download"></i></button>
+                                                </form>
+
+                                                <button data-terget="#deleteModal" data-route="{{route('gallery.destroy',$image->id)}}"
+                                                        data-toggle="modal"
+                                                        class="btn btn-icon btn-icon-mini btn-round btn-danger ddd"><i
+                                                        class="zmdi zmdi-delete"></i></button>
+
+{{--                                                delete by form--}}
+{{--                                                <form action="{{route('gallery.destroy',$image->id)}}" method="post"--}}
+{{--                                                      style="display: inline-block"> @csrf @method('delete')--}}
+{{--                                                    <button type="submit" data-terget="#deleteModal" data-toggle="modal"--}}
+{{--                                                            class="btn btn-icon btn-icon-mini btn-round btn-danger"><i--}}
+{{--                                                            class="zmdi zmdi-delete"></i></button>--}}
+{{--                                                </form>--}}
+{{--                                                delete by a--}}
+{{--                                                    <a href="#deleteModal" data-route="{{route('gallery.destroy',$image->id)}}"--}}
+{{--                                                       data-toggle="modal" class="btn btn-danger btn-sm">--}}
+{{--                                                        <i class="zmdi zmdi-delete"></i></a>--}}
+
                                             </div>
                                             <div class="image">
-                                                <img src="{{asset($image->image)}}" alt="img" class="img-fluid" style="height: 150px;display: block;margin: 0 auto">
+                                                <img src="{{asset($image->image)}}" alt="{{$image->title}}"
+                                                     class="img-fluid"
+                                                     style="height: 150px;display: block;margin: 0 auto">
                                             </div>
                                             <div class="file-name">
                                                 <p class="m-b-5 text-muted">{{$image->title}}</p>
-                                                <small> Size: 2MB <span class="date">Dec 11, 2019</span></small>
-{{--                                                <small>{{\Illuminate\Support\Facades\Storage::size(asset($image->image))}} Size: 2MB <span class="date">Dec 11, 2019</span></small>--}}
+                                                <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}
+                                                    <span
+                                                        class="date">{{$image->created_at->format('M d, Y')}}</span></small>
                                             </div>
                                         </a>
                                     </div>
@@ -46,17 +71,28 @@
                                     <div class="card">
                                         <a href="javascript:void(0);" class="file">
                                             <div class="hover">
-                                                <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-danger">
-                                                    <i class="zmdi zmdi-delete"></i>
-                                                </button>
+                                                <form action="{{route('gallery.download')}}" method="get"
+                                                      style="display: inline-block">
+                                                    <input type="hidden" name="image" value="{{$image->image}}">
+                                                    <input type="hidden" name="title" value="{{$image->title}}">
+                                                    <button type="submit"class="btn btn-icon btn-icon-mini btn-round btn-success"><i
+                                                            class="zmdi zmdi-download"></i></button>
+                                                </form>
+
+                                                <button data-terget="#deleteModal" data-route="{{route('gallery.destroy',$image->id)}}"
+                                                        data-toggle="modal"
+                                                        class="btn btn-icon btn-icon-mini btn-round btn-danger ddd"><i
+                                                        class="zmdi zmdi-delete"></i></button>
                                             </div>
                                             <div class="image">
-                                                <img src="{{asset($image->image)}}" alt="img" class="img-fluid" style="height: 150px;display: block;margin: 0 auto">
+                                                <img src="{{asset($image->image)}}" alt="img" class="img-fluid"
+                                                     style="height: 150px;display: block;margin: 0 auto">
                                             </div>
                                             <div class="file-name">
                                                 <p class="m-b-5 text-muted">{{$image->title}}</p>
-                                                <small> Size: 2MB <span class="date">Dec 11, 2019</span></small>
-                                                {{--                                                <small>{{\Illuminate\Support\Facades\Storage::size(asset($image->image))}} Size: 2MB <span class="date">Dec 11, 2019</span></small>--}}
+                                                <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}
+                                                    <span
+                                                        class="date">{{$image->created_at->format('M d, Y')}}</span></small>
                                             </div>
                                         </a>
                                     </div>
@@ -71,17 +107,28 @@
                                     <div class="card">
                                         <a href="javascript:void(0);" class="file">
                                             <div class="hover">
-                                                <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-danger">
-                                                    <i class="zmdi zmdi-delete"></i>
-                                                </button>
+                                                <form action="{{route('gallery.download')}}" method="get"
+                                                      style="display: inline-block">
+                                                    <input type="hidden" name="image" value="{{$image->image}}">
+                                                    <input type="hidden" name="title" value="{{$image->title}}">
+                                                    <button type="submit"class="btn btn-icon btn-icon-mini btn-round btn-success"><i
+                                                            class="zmdi zmdi-download"></i></button>
+                                                </form>
+
+                                                <button data-terget="#deleteModal" data-route="{{route('gallery.destroy',$image->id)}}"
+                                                        data-toggle="modal"
+                                                        class="btn btn-icon btn-icon-mini btn-round btn-danger ddd"><i
+                                                        class="zmdi zmdi-delete"></i></button>
                                             </div>
                                             <div class="image">
-                                                <img src="{{asset($image->image)}}" alt="img" class="img-fluid" style="height: 150px;display: block;margin: 0 auto">
+                                                <img src="{{asset($image->image)}}" alt="img" class="img-fluid"
+                                                     style="height: 150px;display: block;margin: 0 auto">
                                             </div>
                                             <div class="file-name">
                                                 <p class="m-b-5 text-muted">{{$image->title}}</p>
-                                                <small> Size: 2MB <span class="date">Dec 11, 2019</span></small>
-                                                {{--                                                <small>{{\Illuminate\Support\Facades\Storage::size(asset($image->image))}} Size: 2MB <span class="date">Dec 11, 2019</span></small>--}}
+                                                <small>Size: {{\App\Http\Controllers\Admin\GalleryController::getImageSize($image->image)}}
+                                                    <span
+                                                        class="date">{{$image->created_at->format('M d, Y')}}</span></small>
                                             </div>
                                         </a>
                                     </div>
@@ -93,13 +140,28 @@
             </div>
         </div>
     </div>
-    @endsection
+    <!-- deleteModal -->
+    @include('admin/includes/modals/delete')
+@endsection
+@push('page-script')
+    {{--    delete modal --}}
+    <script>
+        $('.ddd').click(function () {
+            $('#deleteModal').modal('show');
+            document.getElementById("deleteForm").action =  $(this).data('route');
+        });
+        $("#deleteModal").on("click", "#btnMdDelete", function () {
+            $('#deleteModal').modal('hide');
+        });
 
-        @push('page-script')
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            let actionURL = button.data('route') // Extract info from data-* attributes
+            document.getElementById("deleteForm").action = actionURL;
+            $("#deleteModal").on("click", "#btnMdDelete", function () {
+                $('#deleteModal').modal('hide');
+            });
+        })
+    </script>
 
-
-
-
-    @endpush
-
-
+@endpush

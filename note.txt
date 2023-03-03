@@ -1,0 +1,81 @@
+##PHP ==>
+composer dump-autoload
+php -S 127.0.0.1:800
+
+##LARAVEL ==>
+composer create-project laravel/laravel personal-blog
+laravel new personal-blog
+
+cd personal-blog
+php artisan serve
+php artisan serve --port=8080
+
+public> index.php
+Route> web.php
+
+//singular form
+php artisan make:controller CourseController
+php artisan make:controller Admin/DashboardController
+php artisan make:controller Admin/CategoryController -r
+php artisan make:migration create_students_table
+
+php artisan make:model Category
+php artisan make:model Category -m
+php artisan make:model Category -mc
+
+php artisan migrate
+php artisan migrate:fresh
+
+php artisan migrate:rollback
+php artisan migrate
+php artisan route:list
+
+php artisan make:middleware TeacherMiddle
+php artisan make:middleware StudentMiddle
+php artisan make:middleware AdminMiddle
+migratrion file create
+
+
+
+php artisan make:migration  add_column_to_enrolls_table --table=enrolls
+
+
+composer install
+copy .env.example .env
+php artisan key:generate
+php artisan serve
+
+composer install
+
+
+#auth
+composer require laravel/jetstream
+
+php artisan jetstream:install livewire
+#uninstall
+composer remove laravel/jetstream
+
+vendor>laravel>fortify>src>rule
+
+git add . && git commit -m "front nav and db role" && git push
+
+https://ckeditor.com/
+
+orm vs query builder
+
+php artisan route:list
+https://zerossl.com/
+
+
+
+intitle:index(of)? mp4 Avater 2
+indexof:hawa
+
+user crud . name, email,role_type,password
+md5()/sha1() / hash:: make(string) / bcrypt() for password
+
+
+->get() array of collection
+->first() first object of array collection
+->take(2) 2 out of N -- Similar as limit()
+->skip(2) skip first 2 out of N

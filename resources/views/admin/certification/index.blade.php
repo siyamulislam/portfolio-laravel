@@ -17,7 +17,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-lg-7 col-md-6 col-sm-12">
-                                <h5>All Images</h5>
+                                <h5>All Certificates</h5>
                             </div>
                             <div class="col-lg-5 col-md-6 col-sm-12">
                                 <a href="{{route('certifications.create')}}" class="btn btn-primary float-right">Create</a>

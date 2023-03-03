@@ -25,7 +25,7 @@
         }
 
         function loadImage() {
-            let href = 'http://127.0.0.1:8000/api/who';
+            let href = window.location.origin + '/api/who';
             let baseURL = window.location.origin + '/';
             $.ajax({
                 url: href,

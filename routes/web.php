@@ -43,10 +43,10 @@ Route::get('/change-degree-status/{id}',         [EducationController::class,'ch
 Route::get ('degree/show/{id}',                  [EducationController::class, 'show'])->name('degree.show');
 
 Route::resource('certifications',      CertificationController::class);
+
 Route::get('/change-certificate-status/{id}',    [CertificationController::class,'changeCertificateStatus'])->name('certificate.status');
 Route::get ('certificate/show/{id}',             [CertificationController::class, 'show'])->name('certificate.show');
 
-Route::resource('files',      FileController::class);
-
-Route::get('storage-size',                       [FileController::class,'getDiskSpace'])->name('storage.size');
+Route::resource('files',               FileController::class);
+Route::get('storage',                           [FileController::class,'getFile'])->name('storage.size');
 

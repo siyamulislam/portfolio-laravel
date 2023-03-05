@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
@@ -87,15 +88,29 @@ class FileController extends Controller
 
         $totalSpaceInGB = round($totalSpace / (1024 * 1024 * 1024), 0);
         $freeSpaceInGB = round($freeSpace / (1024 * 1024 * 1024), 0);
-
 //        return "Total disk space: {$totalSpaceInGB} GB | Free disk space: {$freeSpaceInGB} GB";
 
         $storageInfo = new \stdClass();
         $storageInfo->totalSpace = $totalSpaceInGB;
         $storageInfo->freeSpace = $freeSpaceInGB;
         $storageInfo->usedSpace = $totalSpaceInGB-$freeSpaceInGB;
-        // Return the object as JSON response
         return $storageInfo;
     }
+
+    public function getDir()
+    {
+        $directories = Storage::disk('public')->directories();
+
+
+        return $directories;
+    }
+    public function getFile()
+    {
+//        $files = Storage::disk('public')->files();
+        $files = Storage::disk('public')->allFiles();
+
+        return $files;
+    }
+
 
 }

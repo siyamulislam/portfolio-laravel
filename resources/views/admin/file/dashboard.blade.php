@@ -19,9 +19,9 @@
                 <div class="card widget_2">
                     <div class="body big_icon storage">
                         <h6>Storage</h6>
-                        <h2> {{$storage->usedSpace}}GB <small class="info">of {{$storage->totalSpace}}GB</small></h2>
+                        <h2> {{$storage->freeSpace}}GB <small class="info">of {{$storage->totalSpace}}GB</small></h2>
                         <div class="progress m-t-10">
-                            <div class="progress-bar l-green" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: {{($storage->usedSpace/$storage->totalSpace)*100}}%;"></div>
+                            <div class="progress-bar l-green" role="progressbar" aria-valuenow="{{($storage->usedSpace/$storage->totalSpace)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{($storage->usedSpace/$storage->totalSpace)*100}}%;"></div>
                         </div>
                     </div>
                 </div>

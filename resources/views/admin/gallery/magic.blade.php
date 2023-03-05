@@ -26,27 +26,24 @@
 
         function loadImage() {
             let href = window.location.origin + '/api/who';
-            let baseURL = window.location.origin + '/';
+            // let baseURL = window.location.origin + '/';
             $.ajax({
                 url: href,
                 beforeSend: function () {
                     document.getElementById("titleID").innerText = 'fetching data..';
                     document.getElementById("imgID").src = '';
-
-
                 },
                 success: function (data) {
-                    console.log(data.image);
-                    document.getElementById("imgID").src = baseURL + data.image;
+                    // console.log(data.image);
+                    document.getElementById("imgID").src =  data.image;
                     document.getElementById("titleID").innerText = data.title;
                     // location.reload(true);
                 },
                 complete: function () {
-                    console.log('done');
-
+                    // console.log('done');
                 },
                 error: function (jqXHR, testStatus, error) {
-                    document.getElementById("titleID").innerText = "Error:" + error+ ". Please try later!";
+                    document.getElementById("titleID").innerText = "" +jqXHR.status+ " "+jqXHR.statusText+ "! Please try later...";
                 }
             });
         }

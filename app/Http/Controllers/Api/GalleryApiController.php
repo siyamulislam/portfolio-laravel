@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
-use Illuminate\Http\Request;
-use function Symfony\Component\String\length;
+use Illuminate\Support\Facades\URL;
 
 class GalleryApiController extends Controller
 {
@@ -13,7 +12,6 @@ class GalleryApiController extends Controller
     {
         return Gallery::latest()->where('status', 1)->get();
     }
-
 
     public function indexSingle($id)
     {
@@ -23,7 +21,6 @@ class GalleryApiController extends Controller
             $image->view_count = $image->view_count + 1;
             $image->save();
         }
-
         return $image;
     }
 
@@ -38,8 +35,7 @@ class GalleryApiController extends Controller
 
         $winImage->view_count = $winImage->view_count + 1;
         $winImage->save();
-
+        $winImage->image=URL::to('/'.$winImage->image);
         return $winImage;
-
     }
 }

@@ -41,7 +41,7 @@
             </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-folder"></i><span>File Manager</span></a>
                 <ul class="ml-menu">
-                    <li><a href="file-dashboard.html">All File</a></li>
+                    <li><a href="{{route('files.index')}}">All File</a></li>
                     <li><a href="file-documents.html">Documents</a></li>
                     <li><a href="file-images.html">Images</a></li>
                     <li><a href="file-media.html">Media</a></li>

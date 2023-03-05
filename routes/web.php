@@ -4,22 +4,10 @@ use App\Http\Controllers\Admin\CertificationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\FileController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});+
 Route::get('/',                      function () { return redirect('dashboard/index'); });
 
 
@@ -58,5 +46,7 @@ Route::resource('certifications',      CertificationController::class);
 Route::get('/change-certificate-status/{id}',    [CertificationController::class,'changeCertificateStatus'])->name('certificate.status');
 Route::get ('certificate/show/{id}',             [CertificationController::class, 'show'])->name('certificate.show');
 
+Route::resource('files',      FileController::class);
 
+Route::get('storage-size',                       [FileController::class,'getDiskSpace'])->name('storage.size');
 

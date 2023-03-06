@@ -11,7 +11,6 @@
             <i class="zmdi zmdi-refresh" onclick="reloadIMG()"></i>
             <br>
             <img src="" alt="" id="imgID" height="300px">
-
         </div>
     </div>
 @endsection

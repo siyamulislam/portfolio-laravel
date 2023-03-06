@@ -106,8 +106,10 @@ class FileController extends Controller
     }
     public function getFile()
     {
-//        $files = Storage::disk('public')->files();
-        $files = Storage::disk('public')->allFiles();
+        $files = Storage::disk('public')->files();
+
+        Storage::disk('public')->put('path/to/new/file.txt', 'Hello, world!');
+//        $files = Storage::disk('public')->allFiles();
 
         return $files;
     }

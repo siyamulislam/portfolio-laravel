@@ -48,5 +48,6 @@ Route::get('/change-certificate-status/{id}',    [CertificationController::class
 Route::get ('certificate/show/{id}',             [CertificationController::class, 'show'])->name('certificate.show');
 
 Route::resource('files',               FileController::class);
-Route::get('storage',                           [FileController::class,'getFile'])->name('storage.size');
+Route::get('storage-file',                           [FileController::class,'getFile'])->name('storage.file');
+Route::get('storage-dir',                           [FileController::class,'getDir'])->name('storage.dir');
 

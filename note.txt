@@ -46,7 +46,7 @@ php artisan key:generate
 php artisan serve
 
 composer install
-
+composer update --ignore-platform-reqscomposer update --ignore-platform-reqs
 
 #auth
 composer require laravel/jetstream

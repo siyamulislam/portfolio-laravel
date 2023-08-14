@@ -10,7 +10,14 @@ class GalleryApiController extends Controller
 {
     public function index()
     {
-        return Gallery::latest()->where('status', 1)->get();
+       // $images =Gallery::latest()->where('status', 1)->get();
+        $images = Gallery::select('id', 'title', 'image as url', 'view_count')->where('status', 1)->latest()->get();
+
+        foreach ($images as $image) {
+            $image->url=URL::to('/'.$image->url);
+        }
+
+        return $images;
     }
 
     public function indexSingle($id)

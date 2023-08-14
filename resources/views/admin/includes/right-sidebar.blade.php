@@ -232,7 +232,13 @@
         </li>
         <li><a href="javascript:void(0);" class="js-right-sidebar" title="Setting"><i
                     class="zmdi zmdi-settings zmdi-hc-spin"></i></a></li>
-        <li><a href="sign-in.html" class="mega-menu" title="Sign Out"><i class="zmdi zmdi-power"></i></a></li>
+        <li>
+            <form action="{{ route('logout') }}" method="POST" class="d-flex">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-danger" type="submit"><i class="zmdi zmdi-power"></i></button>
+            </form>
+        </li>
     </ul>
 </div>
 

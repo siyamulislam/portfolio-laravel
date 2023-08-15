@@ -3,7 +3,7 @@
     <div class="navbar-brand">
         <button class="btn-menu ls-toggle-btn" type="button"><i class="zmdi zmdi-menu"></i></button>
         <a href="{{route('dashboard')}}"><img src="{{asset('/')}}admin/assets/images/logo.svg" width="25" alt="Aero"><span
-                class="m-l-10">Aero</span></a>
+                class="m-l-10">Portfolio</span></a>
     </div>
     <div class="menu">
         <ul class="list">
@@ -11,7 +11,7 @@
                 <div class="user-info">
                     <a class="image" href="{{route('dashboard')}}"><img src="{{asset('/')}}admin/assets/images/profile_av.jpg" alt="User"></a>
                     <div class="detail">
-                        <h4>Michael</h4>
+                        <h4>{{ auth()->user()->name }}</h4>
                         <small>Super Admin</small>
                     </div>
                 </div>
